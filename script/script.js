@@ -1,5 +1,5 @@
-var addButton = document.getElementById("addBtn");
-var mainInput = document.getElementById("textInput");
+var addButton = document.getElementById("add-btn");
+var mainInput = document.getElementById("text-input");
 var todosList = document.getElementById("list");
 
 addButton.onclick = function() {
