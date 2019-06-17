@@ -1,13 +1,13 @@
-var btn = document.getElementById("addBtn");
-var input = document.getElementById("textInput");
-var list = document.getElementById("list");
+var addButton = document.getElementById("addBtn");
+var mainInput = document.getElementById("textInput");
+var todosList = document.getElementById("list");
 
-btn.onclick = function() {
-    var task = input.value;
+addButton.onclick = function() {
+    var task = mainInput.value;
     if (task !== "") {
         var newLi = document.createElement('li');
         newLi.innerHTML = task;
-        list.appendChild(newLi);
+        todosList.appendChild(newLi);
     } else {
         return;
     }
