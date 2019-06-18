@@ -1,0 +1,36 @@
+body {
+    background-color: #e6f7e3;
+}
+
+#main-div {
+    display: flex;
+    background-color: white;
+    width: 40%;
+    margin-left:auto; 
+    margin-right:auto;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+#add-btn {
+    width: 20%;
+}
+
+#text-input {
+    width: 80%;
+}
+
+#second-div {
+    display: flex;
+    width: 40%;
+    margin-left:auto; 
+    margin-right:auto;
+    padding: 10px;
+    justify-content: center;
+}
+
+#list {
+    width: 100%;
+}
