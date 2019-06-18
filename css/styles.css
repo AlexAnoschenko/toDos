@@ -35,11 +35,27 @@ body {
 }
 
 hr {
-    align-content: center;
+  align-content: center;
 }
 
 .checked {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAAG0lEQVQYV2NkIBIwEqmOgSSF/4kxFWQidRUCAO1pAwT823VAAAAAAElFTkSuQmCC');
-    background-repeat: repeat-x;
-    background-position: 50% 50%;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAAG0lEQVQYV2NkIBIwEqmOgSSF/4kxFWQidRUCAO1pAwT823VAAAAAAElFTkSuQmCC");
+  background-repeat: repeat-x;
+  background-position: 50% 50%;
+}
+
+.removed {
+  display: none;
+}
+
+.styleTask {
+  flex: 10;
+}
+
+.styleDate {
+  flex: 3;
+}
+
+.close-button {
+  flex: 1;
 }
