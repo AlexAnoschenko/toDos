@@ -56,15 +56,14 @@ function addNewTask() {
   var newInputedDate = dateTask.value;
   var checkTask = false;
 
-  var tempTask = {};
-  tempTask.todo = newInputedTask;
-  tempTask.date = newInputedDate;
-  tempTask.check = checkTask;
-  tempTask.id = todoList.length;
+  if (newInputedTask.length > 0) {
+    var tempTask = {};
+    tempTask.todo = newInputedTask;
+    tempTask.date = newInputedDate;
+    tempTask.check = checkTask;
+    tempTask.id = todoList.length;
 
-  if (tempTask.todo.length > 0) {
-    var i = todoList.length;
-    todoList[i] = tempTask;
+    todoList.push(tempTask);
   }
 
   if (newInputedTask.length > 0 && newInputedDate !== "") {
