@@ -1,21 +1,24 @@
 var addButton = document.getElementById("add-btn");
 var mainInput = document.getElementById("text-input");
 var dateTask = document.getElementById("date-task");
-var blockForTasks = document.getElementById("block-for-tasks");
+var itemsBlock = document.getElementById("items-block");
 
 var todoList = [];
 
 addButton.addEventListener("click", addNewTask);
-blockForTasks.addEventListener("click", handler);
+itemsBlock.addEventListener("click", handler);
 
 window.onload = function updateWindow() {
-  if (localStorage.getItem("session") !== null) {
+  if (
+    localStorage.getItem("session") !== null &&
+    localStorage.getItem("session") !== []
+  ) {
     var session = localStorage.getItem("session");
     session = JSON.parse(localStorage.getItem("session"));
 
     session.forEach(function(item, index) {
       var newDiv = document.createElement("div");
-      blockForTasks.appendChild(newDiv);
+      itemsBlock.appendChild(newDiv);
 
       if (item.check == true) {
         newDiv.className = "single-item checked";
@@ -49,23 +52,24 @@ function saveList() {
 }
 
 function addNewTask() {
-  var newInputedTask = mainInput.value;
+  var newInputedTask = mainInput.value.trim();
   var newInputedDate = dateTask.value;
   var checkTask = false;
-  var newId = 0;
 
   var tempTask = {};
   tempTask.todo = newInputedTask;
   tempTask.date = newInputedDate;
   tempTask.check = checkTask;
-  tempTask.id = newId + todoList.length;
+  tempTask.id = todoList.length;
 
-  var i = todoList.length;
-  todoList[i] = tempTask;
+  if (tempTask.todo.length > 0) {
+    var i = todoList.length;
+    todoList[i] = tempTask;
+  }
 
-  if (newInputedTask !== "" && newInputedDate !== "") {
+  if (newInputedTask.length > 0 && newInputedDate !== "") {
     var newDiv = document.createElement("div");
-    blockForTasks.appendChild(newDiv);
+    itemsBlock.appendChild(newDiv);
     newDiv.className = "single-item";
     newDiv.id = todoList.length - 1;
 
