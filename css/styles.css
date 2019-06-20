@@ -5,7 +5,7 @@ body {
 .input-block {
   display: flex;
   background-color: white;
-  width: 40%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -32,4 +32,30 @@ body {
   margin-top: 5px;
   border-radius: 5px;
   padding: 5px;
+}
+
+hr {
+  align-content: center;
+}
+
+.checked {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAAG0lEQVQYV2NkIBIwEqmOgSSF/4kxFWQidRUCAO1pAwT823VAAAAAAElFTkSuQmCC");
+  background-repeat: repeat-x;
+  background-position: 50% 50%;
+}
+
+.removed {
+  display: none;
+}
+
+.styleTask {
+  flex: 10;
+}
+
+.styleDate {
+  flex: 3;
+}
+
+.close-button {
+  flex: 1;
 }
