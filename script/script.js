@@ -3,44 +3,53 @@ var mainInput = document.getElementById("text-input");
 var dateTask = document.getElementById("date-task");
 var blockForTasks = document.getElementById("block-for-tasks");
 
-var idArray = [];
 var todoList = [];
 
 addButton.addEventListener("click", addNewTask);
 blockForTasks.addEventListener("click", removeTask);
 blockForTasks.addEventListener("click", taskIsDone);
 
-if (localStorage.getItem("session") !== null) {
-  // getting from localStorage
-  var session = localStorage.getItem("session");
-  session = JSON.parse(localStorage.getItem("session"));
-  console.log(session);
+window.onload = function() {
+  if (localStorage.getItem("session") !== null) {
+    // getting from localStorage
+    var session = localStorage.getItem("session");
+    session = JSON.parse(localStorage.getItem("session"));
+    console.log(session);
 
-  session.forEach(function(item, index) {
-    var newDiv = document.createElement("div");
-    blockForTasks.appendChild(newDiv);
-    newDiv.className = "single-item";
-    newDiv.id = index;
+    session.forEach(function(item, index) {
+      var newDiv = document.createElement("div");
+      blockForTasks.appendChild(newDiv);
 
-    var nextTask = document.createElement("span");
-    var nextDate = document.createElement("span");
-    var closeButton = document.createElement("span");
+      if (item.check == "true") {
+        //console.log(item.check);
+        newDiv.className = "single-item checked";
+      } else {
+        //console.log(item.check);
+        newDiv.className = "single-item";
+      }
 
-    nextTask.innerHTML = item.todo;
-    nextDate.innerHTML = item.date;
-    closeButton.innerHTML = "<b>[X]<b>";
-    nextTask.classList.add("styleTask");
-    nextDate.classList.add("styleDate");
-    closeButton.classList.add("close-button");
+      newDiv.id = index;
 
-    newDiv.appendChild(nextTask);
-    newDiv.appendChild(nextDate);
-    newDiv.appendChild(closeButton);
-  });
-  todoList = session;
+      var nextTask = document.createElement("span");
+      var nextDate = document.createElement("span");
+      var closeButton = document.createElement("span");
 
-  console.log(todoList);
-}
+      nextTask.innerHTML = item.todo;
+      nextDate.innerHTML = item.date;
+      closeButton.innerHTML = "<b>[X]<b>";
+      nextTask.classList.add("styleTask");
+      nextDate.classList.add("styleDate");
+      closeButton.classList.add("close-button");
+
+      newDiv.appendChild(nextTask);
+      newDiv.appendChild(nextDate);
+      newDiv.appendChild(closeButton);
+    });
+    todoList = session;
+
+    console.log(todoList);
+  }
+};
 
 function saveList() {
   localStorage.setItem("session", JSON.stringify(todoList));
@@ -94,15 +103,14 @@ function removeTask(event) {
     var targetId = +target.parentNode.parentNode.id;
     target.parentNode.parentNode.remove();
 
-    var idArray = todoList.filter(function(item) {
-      if (item.id !== targetId) {
-        console.log(targetId);
-        return item;
+    for (let i = 0; i < todoList.length; i++) {
+      if (todoList[i].id === targetId) {
+        todoList.splice(i, 1);
       }
-    });
+    }
 
-    //console.log(targetId);
-    console.log(idArray);
+    saveList();
+    //console.log(todoList);
   } else {
     return;
   }
@@ -111,7 +119,19 @@ function removeTask(event) {
 function taskIsDone(event) {
   var target = event.target;
   if (target.tagName == "SPAN") {
+    var targetId = target.parentNode.id;
+    //console.log(targetId);
     target.parentNode.classList.add("checked");
+
+    for (var i = 0; i < todoList.length; i++) {
+      if (todoList[i].id == targetId) {
+        todoList[i].check = "true";
+      }
+      //console.log(todoList[i].check);
+    }
+    saveList();
+    //console.log(targetId);
+    //console.log(todoList);
   } else {
     return;
   }
