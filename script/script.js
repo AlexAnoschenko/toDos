@@ -11,20 +11,16 @@ blockForTasks.addEventListener("click", taskIsDone);
 
 window.onload = function() {
   if (localStorage.getItem("session") !== null) {
-    // getting from localStorage
     var session = localStorage.getItem("session");
     session = JSON.parse(localStorage.getItem("session"));
-    console.log(session);
 
     session.forEach(function(item, index) {
       var newDiv = document.createElement("div");
       blockForTasks.appendChild(newDiv);
 
       if (item.check == "true") {
-        //console.log(item.check);
         newDiv.className = "single-item checked";
       } else {
-        //console.log(item.check);
         newDiv.className = "single-item";
       }
 
@@ -46,8 +42,6 @@ window.onload = function() {
       newDiv.appendChild(closeButton);
     });
     todoList = session;
-
-    console.log(todoList);
   }
 };
 
@@ -69,7 +63,6 @@ function addNewTask() {
 
   var i = todoList.length;
   todoList[i] = tempTask;
-  //console.log(todoList);
 
   if (newInputedTask !== "" && newInputedDate !== "") {
     var newDiv = document.createElement("div");
