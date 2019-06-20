@@ -6,10 +6,9 @@ var blockForTasks = document.getElementById("block-for-tasks");
 var todoList = [];
 
 addButton.addEventListener("click", addNewTask);
-blockForTasks.addEventListener("click", removeTask);
-blockForTasks.addEventListener("click", taskIsDone);
+blockForTasks.addEventListener("click", handler);
 
-window.onload = function() {
+window.onload = function updateWindow() {
   if (localStorage.getItem("session") !== null) {
     var session = localStorage.getItem("session");
     session = JSON.parse(localStorage.getItem("session"));
@@ -18,7 +17,7 @@ window.onload = function() {
       var newDiv = document.createElement("div");
       blockForTasks.appendChild(newDiv);
 
-      if (item.check == "true") {
+      if (item.check == true) {
         newDiv.className = "single-item checked";
       } else {
         newDiv.className = "single-item";
@@ -52,7 +51,7 @@ function saveList() {
 function addNewTask() {
   var newInputedTask = mainInput.value;
   var newInputedDate = dateTask.value;
-  var checkTask = "false";
+  var checkTask = false;
   var newId = 0;
 
   var tempTask = {};
@@ -90,42 +89,34 @@ function addNewTask() {
   }
 }
 
-function removeTask(event) {
+function handler(event) {
   var target = event.target;
-  if (target.tagName == "B") {
-    var targetId = +target.parentNode.parentNode.id;
-    target.parentNode.parentNode.remove();
-
-    for (let i = 0; i < todoList.length; i++) {
-      if (todoList[i].id === targetId) {
-        todoList.splice(i, 1);
-      }
-    }
-
-    saveList();
-    //console.log(todoList);
-  } else {
-    return;
-  }
-}
-
-function taskIsDone(event) {
-  var target = event.target;
-  if (target.tagName == "SPAN") {
-    var targetId = target.parentNode.id;
-    //console.log(targetId);
-    target.parentNode.classList.add("checked");
+  if (target.tagName === "SPAN") {
+    var targetId = +target.parentNode.id;
+    var targetElem = target.parentNode;
 
     for (var i = 0; i < todoList.length; i++) {
       if (todoList[i].id == targetId) {
-        todoList[i].check = "true";
+        todoList[i].check = !todoList[i].check;
+        if (todoList[i].check === true) {
+          targetElem.classList.add("checked");
+        } else {
+          targetElem.classList.remove("checked");
+        }
       }
-      //console.log(todoList[i].check);
     }
     saveList();
-    //console.log(targetId);
-    //console.log(todoList);
   } else {
-    return;
+    if (target.tagName === "B") {
+      var targetId = +target.parentNode.parentNode.id;
+      target.parentNode.parentNode.remove();
+
+      for (let i = 0; i < todoList.length; i++) {
+        if (todoList[i].id === targetId) {
+          todoList.splice(i, 1);
+        }
+      }
+      saveList();
+    }
   }
 }
