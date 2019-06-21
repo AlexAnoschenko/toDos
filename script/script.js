@@ -1,5 +1,6 @@
 var addButton = document.getElementById("add-btn");
 var mainInput = document.getElementById("text-input");
+var filterInput = document.getElementById("text-filter");
 var dateTask = document.getElementById("date-task");
 var itemsBlock = document.getElementById("items-block");
 var sortAbcButton = document.getElementById("sort-abc-button");
@@ -17,6 +18,7 @@ sortCbaButton.addEventListener("click", sortCba);
 window.addEventListener("load", backUp);
 sortDateButton.addEventListener("click", sortDate);
 sortReDateButton.addEventListener("click", sortReDate);
+filterInput.addEventListener("input", filterTodo);
 
 function backUp() {
   if (
@@ -96,6 +98,14 @@ function updateWindow() {
   }
 }
 
+function nextIdfunc() {
+  if (todoList.length !== 0) {
+    return todoList[todoList.length - 1].id + 1;
+  } else {
+    return 0;
+  }
+}
+
 function saveList() {
   localStorage.setItem("session", JSON.stringify(todoList));
 }
@@ -109,7 +119,7 @@ function addNewTask() {
     tempTask.todo = newInputedTask;
     tempTask.date = newInputedDate;
     tempTask.check = false;
-    tempTask.id = todoList.length;
+    tempTask.id = nextIdfunc();
 
     todoList.push(tempTask);
   }
@@ -158,7 +168,9 @@ function handler(event) {
         }
       }
     }
+
     saveList();
+    createResevreData();
   } else {
     if (target.tagName === "B") {
       var targetId = +target.parentNode.parentNode.id;
@@ -169,7 +181,9 @@ function handler(event) {
           todoList.splice(i, 1);
         }
       }
+
       saveList();
+      createResevreData();
     }
   }
 }
@@ -212,12 +226,6 @@ function sortCba() {
   updateWindow();
 }
 
-function clearItemsBlock() {
-  while (itemsBlock.hasChildNodes()) {
-    itemsBlock.removeChild(itemsBlock.firstChild);
-  }
-}
-
 function sortDate() {
   todoList.sort(function(a, b) {
     var dateA = new Date(a.date),
@@ -245,4 +253,65 @@ function sortReDate() {
 function createResevreData() {
   reserveData = todoList.slice();
   localStorage.setItem("source", JSON.stringify(reserveData));
+}
+
+function clearItemsBlock() {
+  while (itemsBlock.hasChildNodes()) {
+    itemsBlock.removeChild(itemsBlock.firstChild);
+  }
+}
+
+function filterTodo() {
+  var filter = filterInput.value.toLowerCase();
+  var filterArray = todoList.filter(function(item) {
+    return item.todo.toLowerCase().indexOf(filter) > -1;
+  });
+
+  localStorage.setItem("filter", JSON.stringify(filterArray));
+  //console.log(filterArray);
+  clearItemsBlock();
+
+  if (filter == "") {
+    backUp();
+  } else {
+    backUpFilter();
+  }
+}
+
+function backUpFilter() {
+  if (
+    localStorage.getItem("filter") !== null &&
+    localStorage.getItem("filter") !== []
+  ) {
+    var session = localStorage.getItem("filter");
+    session = JSON.parse(localStorage.getItem("filter"));
+
+    session.forEach(function(item, index) {
+      var newDiv = document.createElement("div");
+      itemsBlock.appendChild(newDiv);
+
+      if (item.check == true) {
+        newDiv.className = "single-item checked";
+      } else {
+        newDiv.className = "single-item";
+      }
+
+      newDiv.id = index;
+
+      var nextTask = document.createElement("span");
+      var nextDate = document.createElement("span");
+      var closeButton = document.createElement("span");
+
+      nextTask.innerHTML = item.todo;
+      nextDate.innerHTML = item.date;
+      closeButton.innerHTML = "<b>[X]<b>";
+      nextTask.classList.add("styleTask");
+      nextDate.classList.add("styleDate");
+      closeButton.classList.add("close-button");
+
+      newDiv.appendChild(nextTask);
+      newDiv.appendChild(nextDate);
+      newDiv.appendChild(closeButton);
+    });
+  }
 }
