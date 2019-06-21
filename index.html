@@ -9,18 +9,18 @@
   </head>
   <body>
     <div class="input-block">
-      <input type="button" value="Add a task" id="add-btn" />
-      <input type="text" id="text-input" value="" />
+      <input type="button" value="Add" id="add-btn" />
+      <input type="text" id="text-input" value="" placeholder="Write a task..." />
       <input type="date" id="date-task" />
     </div>
+    <div id="sort-filter-block">
+      <input type="button" value="Sort ABC" id="sort-abc-button" />
+      <br />
+      <input type="button" value="Sort date" id="sort-date-button" />
+      <br />
+      <input type="text" id="text-filter" value="" placeholder="Filter..."/>
+    </div>
     <div id="items-block"></div>
-    <input type="button" value="Sort ABC" id="sort-abc-button" /> 
-    <input type="button" value="Sort CBA" id="sort-cba-button" /> 
-    <br>
-    <input type="button" value="Sort date" id="sort-date-button" /> 
-    <input type="button" value="Sort ReDate" id="sort-re-date-button" /> 
-    <br>
-    <input type="text" id="text-filter" value="" />
     <script src="script/script.js"></script>
   </body>
 </html>

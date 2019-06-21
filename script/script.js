@@ -4,20 +4,18 @@ var filterInput = document.getElementById("text-filter");
 var dateTask = document.getElementById("date-task");
 var itemsBlock = document.getElementById("items-block");
 var sortAbcButton = document.getElementById("sort-abc-button");
-var sortCbaButton = document.getElementById("sort-cba-button");
 var sortDateButton = document.getElementById("sort-date-button");
-var sortReDateButton = document.getElementById("sort-re-date-button");
 
 var todoList = [];
 var reserveData = [];
+var sortTodoStatus = true;
+var sortDateStatus = true;
 
 addButton.addEventListener("click", addNewTask);
 itemsBlock.addEventListener("click", handler);
-sortAbcButton.addEventListener("click", sortAbc);
-sortCbaButton.addEventListener("click", sortCba);
+sortAbcButton.addEventListener("click", sortTodo);
 window.addEventListener("load", backUp);
 sortDateButton.addEventListener("click", sortDate);
-sortReDateButton.addEventListener("click", sortReDate);
 filterInput.addEventListener("input", filterTodo);
 
 function backUp() {
@@ -159,7 +157,7 @@ function handler(event) {
     var targetElem = target.parentNode;
 
     for (var i = 0; i < todoList.length; i++) {
-      if (todoList[i].id == targetId) {
+      if (todoList[i].id === targetId) {
         todoList[i].check = !todoList[i].check;
         if (todoList[i].check === true) {
           targetElem.classList.add("checked");
@@ -188,39 +186,28 @@ function handler(event) {
   }
 }
 
-function sortAbc() {
+function sortTodo() {
   todoList.sort(function(a, b) {
     var nameA = a.todo.toLowerCase();
     var nameB = b.todo.toLowerCase();
-
     if (nameA > nameB) {
-      return 1;
+      if (sortTodoStatus === true) {
+        return 1;
+      } else {
+        return -1;
+      }
     }
 
     if (nameA < nameB) {
-      return -1;
+      if (sortTodoStatus === true) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
   });
 
-  saveList();
-  clearItemsBlock();
-  updateWindow();
-}
-
-function sortCba() {
-  todoList.sort(function(a, b) {
-    var nameA = a.todo.toLowerCase();
-    var nameB = b.todo.toLowerCase();
-
-    if (nameA > nameB) {
-      return -1;
-    }
-
-    if (nameA < nameB) {
-      return 1;
-    }
-  });
-
+  sortTodoStatus = !sortTodoStatus;
   saveList();
   clearItemsBlock();
   updateWindow();
@@ -228,23 +215,16 @@ function sortCba() {
 
 function sortDate() {
   todoList.sort(function(a, b) {
-    var dateA = new Date(a.date),
-      dateB = new Date(b.date);
-    return dateA - dateB;
+    var dateA = new Date(a.date);
+    var dateB = new Date(b.date);
+    if (sortDateStatus === true) {
+      return dateA - dateB;
+    } else {
+      return dateB - dateA;
+    }
   });
 
-  saveList();
-  clearItemsBlock();
-  updateWindow();
-}
-
-function sortReDate() {
-  todoList.sort(function(a, b) {
-    var dateA = new Date(a.date),
-      dateB = new Date(b.date);
-    return dateB - dateA;
-  });
-
+  sortDateStatus = !sortDateStatus;
   saveList();
   clearItemsBlock();
   updateWindow();

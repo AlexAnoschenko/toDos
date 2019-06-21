@@ -1,17 +1,42 @@
 body {
-  background-color: #e6f7e3;
+  background-color: #e6e6e6;
 }
 
 .input-block {
   display: flex;
-  background-color: white;
+  background-color: rgb(247, 48, 48);
   width: 50%;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  border: 2px solid black;
   border-radius: 5px;
   justify-content: center;
+}
+
+#sort-filter-block {
+  margin-top: 5px;
+  display: flex;
+  background-color: rgb(247, 48, 48);
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+#text-filter {
+  width: 80%;
+}
+
+#text-input::-webkit-input-placeholder {
+  color: rgb(247, 23, 23);
+  font-style: italic;
+}
+
+#text-filter::-webkit-input-placeholder {
+  color: rgb(247, 23, 23);
+  font-style: italic;
 }
 
 #add-btn {
@@ -27,7 +52,19 @@ body {
   justify-content: space-between;
   width: 40%;
   margin: 0 auto;
-  background-color: #c5d3ea;
+  background-color: #c6c6c7;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.single-item:hover {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin: 0 auto;
+  background-color: #fc4108;
   margin-bottom: 5px;
   margin-top: 5px;
   border-radius: 5px;
